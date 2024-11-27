@@ -21,9 +21,10 @@ public class RobinHoodHash {
 		elements = new char[this.capacity];
 	}
 	
+	//this will NOT work!!
 	public static void main(String[] args) {
 		
 		
 	}
 
-}
+}
