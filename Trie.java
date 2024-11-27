@@ -1,4 +1,4 @@
-
+package LanguageTrieProject;
 public class Trie {
 	
 	TrieNode root;
