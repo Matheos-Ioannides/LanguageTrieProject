@@ -1,30 +1,27 @@
 package LanguageTrieProject;
 
 public class RobinHoodHash {
-	
-	char elements[];
-	int maxProbeLength;
-	int size;
-	int capacity;
-	
+
+	private Element table[]; // table of elements
+	private int maxProbeLength; // Max distance from initial position
+	private int size; // number of elements in table
+	private int capacity; // total capacity of the table
 
 	public RobinHoodHash() {
-		this(7);
+		this(5);
 	}
-	
+
 	public RobinHoodHash(int capacity) {
-		
-		this.size=0;
-		this.capacity=capacity;
-		this.maxProbeLength=0;
-		
-		elements = new char[this.capacity];
+
+		this.size = 0;
+		this.capacity = capacity;
+		this.maxProbeLength = 0;
+
+		table = new Element[this.capacity];
 	}
-	
-	//this will NOT work!!
+
 	public static void main(String[] args) {
-		
-		
+
 	}
 
 }
