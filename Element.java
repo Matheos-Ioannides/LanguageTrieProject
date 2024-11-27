@@ -3,17 +3,13 @@ package LanguageTrieProject;
 public class Element {
 
 	private char key;
-	private int probeLength;
-	private HashTrieNode next;
-	
-	
-	public Element(char key, int probeLength) {
+	private int probeLength = 0;
+	private HashTrieNode next = null;
+
+	public Element(char key) {
 		this.key = key;
-		this.probeLength = probeLength;
-		next=null;
 	}
-	
-	
+
 	public char getKey() {
 		return key;
 	}
@@ -35,7 +31,6 @@ public class Element {
 	}
 
 	public static void main(String[] args) {
-		
 
 	}
 
