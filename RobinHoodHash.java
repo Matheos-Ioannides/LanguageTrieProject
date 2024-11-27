@@ -20,6 +20,26 @@ public class RobinHoodHash {
 		table = new Element[this.capacity];
 	}
 
+	//Placeholder (might not be void)
+	public void insert(char newChar) {
+		return;
+	}
+	
+	//Return the pointer to the next node newChar points to (if it exists, else returns null)
+	public Element search(char newChar) {
+		return null;
+	}
+	
+	//Placeholder. Checks if the array needs a rehash (is >90% full)
+	public boolean needsRehash() {
+		return false;
+	}
+	
+	//Rehashes the table, pretty self explanatory. Idiot
+	public void rehash() {
+		return;
+	}
+	
 	public static void main(String[] args) {
 
 	}
