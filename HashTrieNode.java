@@ -12,18 +12,34 @@ public class HashTrieNode {
 		this.importance = 0;
 	}
 
-	//Only takes lowercase characters, fix later 
-	public void insert(char newChar){
-		boolean charExists=false;
+	// Only takes lowercase characters, fix later
+	//BUG: THE LAST CHARACTER OF A WORD WILL ALWAYS HAVE A POINTER TO AN EMPTY NODE
+	public HashTrieNode insert(char newChar) {
+		boolean charExists = false;
+		Element newElement = null;
 		
-		for(int i=0; i<this.hashTable.table.length; i++) 
-			if(this.hashTable.table[i].getKey() == newChar)
-				charExists=true;
-				
-//		if(!charExists) {
-//			
-//		}
+		for (int i = 0; i < this.hashTable.table.length; i++) {
+			if (this.hashTable.table[i]!=null && this.hashTable.table[i].getKey() == newChar) {
+				charExists = true;
+				newElement = this.hashTable.table[i];
+			}
+		}
+
+		if (!charExists) {
+			newElement = this.hashTable.insert(newChar);
+			newElement.setNext(new HashTrieNode());
+		}
+
+		return newElement.getNext();
+	}
+	
+	public static void main(String args[]) {
+		HashTrieNode myNode = new HashTrieNode();
 		
+		myNode.insert('a').insert('b');
 		
+		myNode.insert('a').insert('c');
+		
+		myNode.insert('a').insert('c').insert('d'); 
 	}
 }

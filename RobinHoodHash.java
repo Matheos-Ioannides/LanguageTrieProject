@@ -54,23 +54,27 @@ public class RobinHoodHash {
 
 	// Placeholder (might not be void)
 	// NOTE: ONLY WORKS FOR LOWERCASE, UPDATE LATER
-	public void insert(char newChar) {
+	public Element insert(char newChar) {
 		int i = (newChar - 'a') % this.capacity; // hashing function
 
-		Element currentElement = new Element(newChar);
+		Element newElement = new Element(newChar);
+
+		Element currentElement = newElement;
 
 		while (currentElement != null) {
-			if (currentElement.getProbeLength() > this.table[i].getProbeLength() || this.table[i] == null) {
+			if (this.table[i] == null || currentElement.getProbeLength() > this.table[i].getProbeLength()) {
 				Element temp = this.table[i];
 				this.table[i] = currentElement;
 				currentElement = temp;
 			} else {
 				i++;
-				currentElement.setProbeLength(currentElement.getProbeLength() + 1); //java moment
+				currentElement.setProbeLength(currentElement.getProbeLength() + 1);
+				if (currentElement.getProbeLength() > this.maxProbeLength)
+					this.maxProbeLength = currentElement.getProbeLength();
 			}
 		}
 
-		return;
+		return newElement;
 	}
 
 	// Return the pointer to the next node newChar points to (if it exists, else
