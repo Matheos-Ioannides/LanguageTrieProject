@@ -52,7 +52,7 @@ public class RobinHoodHash {
 		this.capacity = capacity;
 	}
 
-	// Placeholder (might not be void)
+	// Placeholder
 	// NOTE: ONLY WORKS FOR LOWERCASE, UPDATE LATER
 	public Element insert(char newChar) {
 		int i = (newChar - 'a') % this.capacity; // hashing function
@@ -73,24 +73,53 @@ public class RobinHoodHash {
 					this.maxProbeLength = currentElement.getProbeLength();
 			}
 		}
+		this.size++;
+
+		if (this.needsRehash())
+			this.rehash();
 
 		return newElement;
 	}
 
-	// Return the pointer to the next node newChar points to (if it exists, else
-	// returns null)
-	public Element search(char newChar) {
-		return null;
-	}
-
 	// Placeholder. Checks if the array needs a rehash (is >90% full)
 	public boolean needsRehash() {
+		if ((float) this.size / this.capacity > 0.9)
+			return true;
 		return false;
 	}
 
 	// Rehashes the table, pretty self explanatory. Idiot
 	public void rehash() {
-		return;
+		int newCapacity = 0;
+
+		switch (this.capacity) {
+		case 5:
+			newCapacity = 11;
+			break;
+		case 11:
+			newCapacity = 19;
+			break;
+		case 19:
+			newCapacity = 29;
+			break;
+		}
+
+		Element newElements[] = new Element[newCapacity];
+		Element tempTable[] = this.table;
+		this.table = newElements;
+		this.size=0;
+
+		int tempCapacity = this.capacity;
+		this.capacity = newCapacity;
+		
+
+		for (int i = 0; i < tempCapacity; i++) {
+			if (tempTable[i] != null) {
+				Element tempElem = this.insert(tempTable[i].getKey());
+				tempElem.setNext(tempTable[i].getNext());
+			}
+		}
+
 	}
 
 	public static void main(String[] args) {
