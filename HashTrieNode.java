@@ -38,12 +38,15 @@ public class HashTrieNode {
 			if (this.hashTable.table[i] != null && this.hashTable.table[i].getKey() == newChar) {
 				charExists = true;
 				newElement = this.hashTable.table[i];
+				break;
 			}
 		}
 
 		if (!charExists) {
 			newElement = this.hashTable.insert(newChar);
 			newElement.setNext(new HashTrieNode());
+			if(this.hashTable.needsRehash())
+				this.hashTable.rehash();
 		}
 		
 		return newElement.getNext();

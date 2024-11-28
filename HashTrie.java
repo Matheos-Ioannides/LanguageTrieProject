@@ -50,15 +50,6 @@ public class HashTrie {
 	public static void main(String[] args) {
 		HashTrie myTrie = new HashTrie();
 
-		myTrie.insert("car");
-		myTrie.insert("cat");
-		myTrie.insert("catnip");
-
-		System.out.println(myTrie.search("car"));
-		System.out.println(myTrie.search("cat"));
-		System.out.println(myTrie.search("catnips"));
-		System.out.println(myTrie.search("carson"));
-		
 	}
 
 }
