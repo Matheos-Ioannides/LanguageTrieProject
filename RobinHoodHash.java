@@ -117,7 +117,6 @@ public class RobinHoodHash {
 				tempElem.setNext(tempTable[i].getNext());
 			}
 		}
-		System.out.println();
 	}
 
 	public static void main(String[] args) {
