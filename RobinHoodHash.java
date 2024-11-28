@@ -68,15 +68,13 @@ public class RobinHoodHash {
 				currentElement = temp;
 			} else {
 				i++;
+				i%=this.capacity;
 				currentElement.setProbeLength(currentElement.getProbeLength() + 1);
 				if (currentElement.getProbeLength() > this.maxProbeLength)
 					this.maxProbeLength = currentElement.getProbeLength();
 			}
 		}
 		this.size++;
-
-		if (this.needsRehash())
-			this.rehash();
 
 		return newElement;
 	}
@@ -119,7 +117,7 @@ public class RobinHoodHash {
 				tempElem.setNext(tempTable[i].getNext());
 			}
 		}
-
+		System.out.println();
 	}
 
 	public static void main(String[] args) {
