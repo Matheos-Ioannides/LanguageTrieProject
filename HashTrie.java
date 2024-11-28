@@ -1,5 +1,9 @@
 package LanguageTrieProject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class HashTrie {
 
 	private HashTrieNode root = new HashTrieNode();
@@ -43,13 +47,43 @@ public class HashTrie {
 		return this.search(targetWord.substring(1), wordLength, currentNode);
 	}
 
+	public static void readDictionary(HashTrie myTrie, String filename){
+		try {
+            File dictionary = new File(filename);
+            Scanner input = new Scanner(dictionary);
+
+            while (input.hasNextLine()) {
+            	myTrie.insert(input.nextLine().toLowerCase());
+			}
+            input.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Dictionary file not found: ");
+        }
+	}
+
+
+
+
+
+
+
 	public boolean search(String targetWord) {
 		return this.search(targetWord, targetWord.length(), this.root);
 	}
 
 	public static void main(String[] args) {
-		HashTrie myTrie = new HashTrie();
 
+		HashTrie myTrie = new HashTrie();
+		
+		System.out.println("File file name of dictionary");
+		Scanner in = new Scanner(System.in);
+		String dictionary = in.nextLine();
+		readDictionary(myTrie, dictionary);
+
+
+
+		/* 
 		myTrie.insert("car");
 		myTrie.insert("cat");
 		myTrie.insert("catnip");
@@ -58,7 +92,7 @@ public class HashTrie {
 		System.out.println(myTrie.search("cat"));
 		System.out.println(myTrie.search("catnips"));
 		System.out.println(myTrie.search("carson"));
-		
+		*/
 	}
 
 }
