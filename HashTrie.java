@@ -47,6 +47,27 @@ public class HashTrie {
 		return this.search(targetWord.substring(1), wordLength, currentNode);
 	}
 
+	private HashTrieNode nodeSearch(String targetWord, int wordLength, HashTrieNode currentNode) {
+
+		if (currentNode == null)
+			return null; // if the currentNode is null, that means the key was not found
+
+		if (targetWord.length() == 1)
+			if (currentNode.getWordLength() == wordLength
+					&& currentNode.search(targetWord.charAt(0), wordLength) != null) {
+				return currentNode;
+			} else {
+				return null;
+			}
+
+		currentNode = currentNode.search(targetWord.charAt(0), wordLength);
+		return this.nodeSearch(targetWord.substring(1), wordLength, currentNode);
+	}
+
+	public boolean search(String targetWord) {
+		return this.search(targetWord, targetWord.length(), this.root);
+	}
+
 	public static void readDictionary(HashTrie myTrie, String filename) {
 		try {
 			File dictionary = new File(filename);
@@ -62,23 +83,54 @@ public class HashTrie {
 		}
 	}
 
-	public boolean search(String targetWord) {
-		return this.search(targetWord, targetWord.length(), this.root);
+	public static void setImportance(HashTrie myTrie, String filename){
+		try {
+			File importanceFile = new File(filename);
+			Scanner input = new Scanner(importanceFile);
+
+			while (input.hasNextLine()) {
+				String word = input.next().toLowerCase();
+				if(checkWordValidity(word))	{
+					HashTrieNode finalNode = myTrie.nodeSearch(word, word.length(), myTrie.root);		
+					if(finalNode != null){
+						finalNode.incrementImportance();
+					}
+				}
+			}
+			input.close();
+
+		} catch (FileNotFoundException e) {
+			System.out.println("Dictionary file not found: ");
+		}
+	}
+
+	private static boolean checkWordValidity(String word){
+		for(int i = 0; i < word.length(); i++){
+			char c = word.charAt(i);
+			if(c < 'a' && c > 'z' && c < 'A' && c > 'Z'){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public static void main(String[] args) {
 
 		HashTrie myTrie = new HashTrie();
 
-		System.out.println("File name of dictionary");
-		Scanner in = new Scanner(System.in);
-		String dictionary = in.nextLine();
-		readDictionary(myTrie, dictionary);
+		//System.out.println("File name of dictionary");
+		//Scanner in = new Scanner(System.in);
+		//String dictionary = in.nextLine();
+		readDictionary(myTrie, args[0]);
+		setImportance(myTrie, args[1]);
 
+
+		
 		System.out.println(myTrie.search("abandon"));  
 		System.out.println(myTrie.search("ability"));  
 		System.out.println(myTrie.search("abroad"));  
 		System.out.println(myTrie.search("abundant"));  
+		/*
 		System.out.println(myTrie.search("access"));  
 		System.out.println(myTrie.search("achieve"));  
 		System.out.println(myTrie.search("adapt"));  
@@ -143,7 +195,7 @@ public class HashTrie {
 		System.out.println(myTrie.search("circle"));  
 		System.out.println(myTrie.search("citizen"));  
 		System.out.println(myTrie.search("claim"));
-
+		*/
 		
 	}
 

@@ -24,8 +24,8 @@ public class HashTrieNode {
 		return importance;
 	}
 
-	public void setImportance(int importance) {
-		this.importance = importance;
+	public void incrementImportance(){
+		this.importance++;
 	}
 
 	// Only takes lowercase characters, fix later
