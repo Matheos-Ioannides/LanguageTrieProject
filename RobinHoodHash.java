@@ -116,6 +116,7 @@ public class RobinHoodHash {
 				Element tempElem = this.insert(tempTable[i].getKey());
 				tempElem.setNext(tempTable[i].getNext());
 				tempElem.setWordLength(tempTable[i].getWordLength());
+				tempElem.setImportance(tempTable[i].getImportance());
 			}
 		}
 	}

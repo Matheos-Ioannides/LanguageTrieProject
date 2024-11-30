@@ -6,6 +6,7 @@ public class Element {
 	private int probeLength = 0;
 	private HashTrieNode next = null;
 	private int wordLength=-1;
+	private int importance=0;
 
 	public Element(char key) {
 		this.key = key;
@@ -37,6 +38,14 @@ public class Element {
 	
 	public void setWordLength(int wordLength) {
 		this.wordLength = wordLength;
+	}
+	
+	public int getImportance() {
+		return this.importance;
+	}
+
+	public void setImportance(int importance) {
+		this.importance=importance;
 	}
 	
 	public static void main(String[] args) {

@@ -47,25 +47,23 @@ public class HashTrie {
 		return this.search(targetWord.substring(1), wordLength, currentNode);
 	}
 
-
 	private HashTrieNode nodeSearch(String targetWord, int wordLength, HashTrieNode currentNode) {
 
 		if (currentNode == null)
 			return null; // if the currentNode is null, that means the key was not found
 
 		if (targetWord.length() == 1)
-			if (currentNode.getWordLength() == wordLength
-					&& currentNode.search(targetWord.charAt(0), wordLength) != null) {
+			if (currentNode.getWordLength(targetWord.charAt(0)) == wordLength
+					&& currentNode.search(targetWord.charAt(0)) != null) {
 				return currentNode;
 			} else {
 				return null;
 			}
 
-		currentNode = currentNode.search(targetWord.charAt(0), wordLength);
+		currentNode = currentNode.search(targetWord.charAt(0));
 		return this.nodeSearch(targetWord.substring(1), wordLength, currentNode);
 	}
 
-  
 	public boolean search(String targetWord) {
 		return this.search(targetWord, targetWord.length(), this.root);
 	}
@@ -85,25 +83,17 @@ public class HashTrie {
 		}
 	}
 
-
-  
-  
-  
-  
-  
-  
-  
-	public static void setImportance(HashTrie myTrie, String filename){
+	public static void setImportance(HashTrie myTrie, String filename) {
 		try {
 			File importanceFile = new File(filename);
 			Scanner input = new Scanner(importanceFile);
 
 			while (input.hasNextLine()) {
 				String word = input.next().toLowerCase();
-				if(checkWordValidity(word))	{
-					HashTrieNode finalNode = myTrie.nodeSearch(word, word.length(), myTrie.root);		
-					if(finalNode != null){
-						finalNode.incrementImportance();
+				if (checkWordValidity(word)) {
+					HashTrieNode finalNode = myTrie.nodeSearch(word, word.length(), myTrie.root);
+					if (finalNode != null) {
+						finalNode.incrementImportance(word.charAt(word.length() - 1));
 					}
 				}
 			}
@@ -114,17 +104,16 @@ public class HashTrie {
 		}
 	}
 
-	private static boolean checkWordValidity(String word){
-		for(int i = 0; i < word.length(); i++){
+	private static boolean checkWordValidity(String word) {
+		for (int i = 0; i < word.length(); i++) {
 			char c = word.charAt(i);
-			if(c < 'a' && c > 'z' && c < 'A' && c > 'Z'){
+			if (c < 'a' && c > 'z' && c < 'A' && c > 'Z') {
 				return false;
 			}
 		}
 		return true;
-  }
+	}
 
-  
 	private void findKWithPrefix(String prefix, MinHeap myHeap) {
 		HashTrieNode current = this.root.startsWith(prefix);
 		if (current == null)
@@ -149,8 +138,7 @@ public class HashTrie {
 		this.root.collectWithSimilarLength(this.root, "", targetWord, myHeap);
 	}
 
-
-  public void findKWords(String prefix, MinHeap myHeap) {
+	public void findKWords(String prefix, MinHeap myHeap) {
 		System.out.println("With the prefix " + prefix);
 		this.findKWithPrefix(prefix, myHeap);
 		System.out.println("\nWith the same length as " + prefix);
@@ -160,6 +148,29 @@ public class HashTrie {
 	}
 
 	public static void main(String[] args) {
+		HashTrie myTrie = new HashTrie();
+		readDictionary(myTrie,
+				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\Words.txt");
+		setImportance(myTrie,
+				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\ImpText.txt");
+
+		System.out.println(myTrie.search("avoid"));  
+		System.out.println(myTrie.search("balance"));  
+		System.out.println(myTrie.search("beauty"));  
+		System.out.println(myTrie.search("believe"));  
+		System.out.println(myTrie.search("benefit"));  
+		System.out.println(myTrie.search("beyond"));  
+		System.out.println(myTrie.search("blend"));  
+		System.out.println(myTrie.search("border"));  
+		System.out.println(myTrie.search("borrow"));  
+		System.out.println(myTrie.search("break"));  
+		System.out.println(myTrie.search("bridge"));  
+		System.out.println(myTrie.search("bright")); 
+		
+		
+		MinHeap myHeap = new MinHeap(123);
+		System.out.println("\n\n");
+		myTrie.findKWords("ar", myHeap);
 
 	}
 

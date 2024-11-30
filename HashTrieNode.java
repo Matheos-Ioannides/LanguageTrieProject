@@ -4,12 +4,12 @@ public class HashTrieNode {
 
 	RobinHoodHash hashTable;
 //	private int wordLength;
-	private int importance;
+//	private int importance;
 
 	public HashTrieNode() {
 		this.hashTable = new RobinHoodHash();
 //		this.wordLength = -1;
-		this.importance = 0;
+//		this.importance = 0;
 	}
 
 	public int getWordLength(char targetChar) {
@@ -19,12 +19,17 @@ public class HashTrieNode {
 		return -1;
 	}
 
-	public int getImportance() {
-		return importance;
+	public int getImportance(char targetChar) {
+		for (int i = 0; i < this.hashTable.table.length; i++)
+			if (this.hashTable.table[i] != null && this.hashTable.table[i].getKey() == targetChar)
+				return this.hashTable.table[i].getImportance();
+		return -1;
 	}
 
-	public void incrementImportance(){
-		this.importance++;
+	public void incrementImportance(char targetChar) {
+		for (int i = 0; i < this.hashTable.table.length; i++)
+			if (this.hashTable.table[i] != null && this.hashTable.table[i].getKey() == targetChar)
+				this.hashTable.table[i].setImportance(this.hashTable.table[i].getImportance() + 1);
 	}
 
 	// Only takes lowercase characters, fix later
@@ -168,7 +173,7 @@ public class HashTrieNode {
 				if (currentIndex == baseWord.length())
 					return true;
 			}
-			
+
 		}
 
 		return false;
