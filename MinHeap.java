@@ -103,8 +103,29 @@ public class MinHeap {
 	}
 
 	
+
 	//Driver function to test MinHeaP
 	public static void main(String[] args) {
+		
+		MinHeap myHeap = new MinHeap(10);
+
+		myHeap.insert("a", 1);
+		myHeap.insert("b", 2);
+		myHeap.insert("c", 3);
+		myHeap.insert("d", 4);
+		myHeap.insert("e", 5);
+		myHeap.insert("f", 6);
+		myHeap.insert("g", 10);
+		myHeap.insert("h", 8);
+		myHeap.insert("i", 9);
+		myHeap.insert("j", 7);
+		myHeap.insert("k", 0);
+		myHeap.insert("kjkj", 50);
+
+		System.out.println("");
+
+
+
 
 	}
 

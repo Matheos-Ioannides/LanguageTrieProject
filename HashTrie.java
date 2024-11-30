@@ -54,12 +54,11 @@ public class HashTrie {
 	public static void readDictionary(HashTrie myTrie, String filename) {
 		try {
 			File dictionary = new File(filename);
-			Scanner input = new Scanner(dictionary);
-
-			while (input.hasNextLine()) {
-				myTrie.insert(input.nextLine().toLowerCase());
-			}
-			input.close();
+                    try (Scanner input = new Scanner(dictionary)) {
+                        while (input.hasNextLine()) {
+                            myTrie.insert(input.nextLine().toLowerCase());
+                        }
+                    }
 
 		} catch (FileNotFoundException e) {
 			System.out.println("Dictionary file not found: ");
