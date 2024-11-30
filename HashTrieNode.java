@@ -19,10 +19,6 @@ public class HashTrieNode {
 		return -1;
 	}
 
-	public void setWordLength(int wordLength) {
-//		this.wordLength = wordLength;
-	}
-
 	public int getImportance() {
 		return importance;
 	}
@@ -80,41 +76,103 @@ public class HashTrieNode {
 		return current;
 	}
 
-//	public void collectWithPrefix(HashTrieNode current, String prefix, int k, MinHeap myHeap) {
-//
-//		if (current == null)
-//			return;
-//
-//		for (char i = 'a'; i <= 'z'; i++) {
-//			HashTrieNode next = current.search(i);
-//			if (next != null) {
-//				this.collectWithPrefix(next, prefix + i, k, myHeap);
-////				if (current.wordLength != -1 && current.importance != 0) {
-//				if (current.wordLength != -1) {
-////				myHeap.heapPush(prefix, current.importance); not yet implemented
-//					System.out.println(prefix + i);
-//				}
-//			}
-//		}
-//	}
+	public void collectWithPrefix(HashTrieNode current, String prefix, MinHeap myHeap) {
 
-//	public void collectWithSameLength(HashTrieNode current, String wordBuilder, String targetWord, int k,
-//			MinHeap myHeap) {
-//
-//		if (current == null)
-//			return;
-//
-////		if(current.wordLength == targetWord.length() && current.importance!= 0)
-//		if (current.wordLength == targetWord.length() + 1)
-////			myHeap.heapPush(wordBuilder, current.importance);
-//			System.out.println(wordBuilder);
-//
-//		for (char i = 'a'; i <= 'z'; i++) {
-//			HashTrieNode next = current.search(i);
-//			if (next != null)
-//				this.collectWithSameLength(next, wordBuilder + i, targetWord, k, myHeap);
-//		}
-//	}
+		if (current == null)
+			return;
+
+		for (char i = 'a'; i <= 'z'; i++) {
+			HashTrieNode next = current.search(i);
+			if (next != null) {
+				this.collectWithPrefix(next, prefix + i, myHeap);
+//				if (current.wordLength != -1 && current.importance != 0) {
+				if (current.getWordLength(i) != -1) {
+//				myHeap.heapPush(prefix, current.importance); not yet implemented
+					System.out.println(prefix + i);
+				}
+			}
+		}
+	}
+
+	public void collectWithSameLength(HashTrieNode current, String wordBuilder, String targetWord, MinHeap myHeap) {
+
+		if (current == null || wordBuilder.length() > targetWord.length())
+			return;
+
+		for (int i = 0; i < current.hashTable.table.length; i++) {
+//			if (current.hashTable.table[i] != null&&current.hashTable.table[i].getWordLength() == targetWord.length() && current.getImportance()!=0) {
+			if (current.hashTable.table[i] != null
+					&& current.hashTable.table[i].getWordLength() == targetWord.length()) {
+				if (countDifferentLetters(targetWord, wordBuilder + current.hashTable.table[i].getKey()) <= 2)
+//					myHeap.heapPush(wordBuilder, current.importance);
+					System.out.println(wordBuilder + current.hashTable.table[i].getKey());
+			}
+		}
+
+		for (char i = 'a'; i <= 'z'; i++) {
+			HashTrieNode next = current.search(i);
+			if (next != null)
+				this.collectWithSameLength(next, wordBuilder + i, targetWord, myHeap);
+		}
+	}
+
+	private int countDifferentLetters(String baseWord, String checkWord) {
+		int count = 0;
+		for (int i = 0; i < baseWord.length(); i++)
+			if (baseWord.charAt(i) != checkWord.charAt(i))
+				count++;
+		return count;
+	}
+
+	public void collectWithSimilarLength(HashTrieNode current, String wordBuilder, String targetWord, MinHeap myHeap) {
+
+		if (current == null)
+			return;
+
+		for (int i = 0; i < current.hashTable.table.length; i++) {
+			if (current.hashTable.table[i] != null && current.hashTable.table[i].getWordLength() > 0) {
+				if (validForSimilarLength(targetWord, wordBuilder + current.hashTable.table[i].getKey()))
+//				myHeap.heapPush(wordBuilder, current.importance);
+					System.out.println(wordBuilder + current.hashTable.table[i].getKey());
+			}
+
+		}
+
+		for (char i = 'a'; i <= 'z'; i++) {
+			HashTrieNode next = current.search(i);
+			if (next != null)
+				this.collectWithSimilarLength(next, wordBuilder + i, targetWord, myHeap);
+		}
+
+	}
+
+	private boolean validForSimilarLength(String baseWord, String checkWord) {
+		if (baseWord.length() - checkWord.length() == 1) {
+
+			int currentIndex = 0;
+			for (int i = 0; i < baseWord.length(); i++) {
+				if (checkWord.charAt(currentIndex) == baseWord.charAt(i)) {
+					currentIndex++;
+				}
+			}
+			if (currentIndex == checkWord.length())
+				return true;
+
+		} else if (checkWord.length() - baseWord.length() <= 2) {
+			int currentIndex = 0;
+
+			for (int i = 0; i < checkWord.length(); i++) {
+				if (checkWord.charAt(i) == baseWord.charAt(currentIndex)) {
+					currentIndex++;
+				}
+				if (currentIndex == baseWord.length())
+					return true;
+			}
+			
+		}
+
+		return false;
+	}
 
 	public static void main(String args[]) {
 		HashTrieNode myNode = new HashTrieNode();
