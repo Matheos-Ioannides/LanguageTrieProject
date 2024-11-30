@@ -47,6 +47,25 @@ public class HashTrie {
 		return this.search(targetWord.substring(1), wordLength, currentNode);
 	}
 
+
+	private HashTrieNode nodeSearch(String targetWord, int wordLength, HashTrieNode currentNode) {
+
+		if (currentNode == null)
+			return null; // if the currentNode is null, that means the key was not found
+
+		if (targetWord.length() == 1)
+			if (currentNode.getWordLength() == wordLength
+					&& currentNode.search(targetWord.charAt(0), wordLength) != null) {
+				return currentNode;
+			} else {
+				return null;
+			}
+
+		currentNode = currentNode.search(targetWord.charAt(0), wordLength);
+		return this.nodeSearch(targetWord.substring(1), wordLength, currentNode);
+	}
+
+  
 	public boolean search(String targetWord) {
 		return this.search(targetWord, targetWord.length(), this.root);
 	}
@@ -66,6 +85,46 @@ public class HashTrie {
 		}
 	}
 
+
+  
+  
+  
+  
+  
+  
+  
+	public static void setImportance(HashTrie myTrie, String filename){
+		try {
+			File importanceFile = new File(filename);
+			Scanner input = new Scanner(importanceFile);
+
+			while (input.hasNextLine()) {
+				String word = input.next().toLowerCase();
+				if(checkWordValidity(word))	{
+					HashTrieNode finalNode = myTrie.nodeSearch(word, word.length(), myTrie.root);		
+					if(finalNode != null){
+						finalNode.incrementImportance();
+					}
+				}
+			}
+			input.close();
+
+		} catch (FileNotFoundException e) {
+			System.out.println("Dictionary file not found: ");
+		}
+	}
+
+	private static boolean checkWordValidity(String word){
+		for(int i = 0; i < word.length(); i++){
+			char c = word.charAt(i);
+			if(c < 'a' && c > 'z' && c < 'A' && c > 'Z'){
+				return false;
+			}
+		}
+		return true;
+  }
+
+  
 	private void findKWithPrefix(String prefix, MinHeap myHeap) {
 		HashTrieNode current = this.root.startsWith(prefix);
 		if (current == null)
@@ -90,7 +149,8 @@ public class HashTrie {
 		this.root.collectWithSimilarLength(this.root, "", targetWord, myHeap);
 	}
 
-	public void findKWords(String prefix, MinHeap myHeap) {
+
+  public void findKWords(String prefix, MinHeap myHeap) {
 		System.out.println("With the prefix " + prefix);
 		this.findKWithPrefix(prefix, myHeap);
 		System.out.println("\nWith the same length as " + prefix);
@@ -101,102 +161,6 @@ public class HashTrie {
 
 	public static void main(String[] args) {
 
-		HashTrie myTrie = new HashTrie();
-
-		readDictionary(myTrie,
-				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\Words.txt");
-
-//		System.out.println(myTrie.search("abandon"));
-//		System.out.println(myTrie.search("ability"));
-//		System.out.println(myTrie.search("abroad"));
-//		System.out.println(myTrie.search("abundant"));
-//		System.out.println(myTrie.search("access"));
-//		System.out.println(myTrie.search("achieve"));
-//		System.out.println(myTrie.search("adapt"));
-//		System.out.println(myTrie.search("admire"));
-//		System.out.println(myTrie.search("adventure"));
-//		System.out.println(myTrie.search("advice"));
-//		System.out.println(myTrie.search("advocate"));
-//		System.out.println(myTrie.search("afford"));
-//		System.out.println(myTrie.search("agree"));
-//		System.out.println(myTrie.search("alert"));
-//		System.out.println(myTrie.search("align"));
-//		System.out.println(myTrie.search("allow"));
-//		System.out.println(myTrie.search("alter"));
-//		System.out.println(myTrie.search("ambition"));
-//		System.out.println(myTrie.search("analyze"));
-//		System.out.println(myTrie.search("ancient"));
-//		System.out.println(myTrie.search("angle"));
-//		System.out.println(myTrie.search("animal"));
-//		System.out.println(myTrie.search("answer"));
-//		System.out.println(myTrie.search("appeal"));
-//		System.out.println(myTrie.search("apply"));
-//		System.out.println(myTrie.search("approve"));
-//		System.out.println(myTrie.search("area"));
-//		System.out.println(myTrie.search("argue"));
-//		System.out.println(myTrie.search("arrange"));
-//		System.out.println(myTrie.search("arrest"));
-//		System.out.println(myTrie.search("arrive"));
-//		System.out.println(myTrie.search("artist"));
-//		System.out.println(myTrie.search("assist"));
-//		System.out.println(myTrie.search("assume"));
-//		System.out.println(myTrie.search("athlete"));
-//		System.out.println(myTrie.search("attack"));
-//		System.out.println(myTrie.search("attempt"));
-//		System.out.println(myTrie.search("attend"));
-//		System.out.println(myTrie.search("attract"));
-//		System.out.println(myTrie.search("author"));
-//		System.out.println(myTrie.search("avoid"));
-//		System.out.println(myTrie.search("balance"));
-//		System.out.println(myTrie.search("beauty"));
-//		System.out.println(myTrie.search("believe"));
-//		System.out.println(myTrie.search("benefit"));
-//		System.out.println(myTrie.search("beyond"));
-//		System.out.println(myTrie.search("blend"));
-//		System.out.println(myTrie.search("border"));
-//		System.out.println(myTrie.search("borrow"));
-//		System.out.println(myTrie.search("break"));
-//		System.out.println(myTrie.search("bridge"));
-//		System.out.println(myTrie.search("bright"));
-//		System.out.println(myTrie.search("budget"));
-//		System.out.println(myTrie.search("build"));
-//		System.out.println(myTrie.search("burst"));
-//		System.out.println(myTrie.search("calm"));
-//		System.out.println(myTrie.search("cancel"));
-//		System.out.println(myTrie.search("capture"));
-//		System.out.println(myTrie.search("care"));
-//		System.out.println(myTrie.search("carry"));
-//		System.out.println(myTrie.search("cause"));
-//		System.out.println(myTrie.search("center"));
-//		System.out.println(myTrie.search("change"));
-//		System.out.println(myTrie.search("charge"));
-//		System.out.println(myTrie.search("choice"));
-//		System.out.println(myTrie.search("circle"));
-//		System.out.println(myTrie.search("citizen"));
-//		System.out.println(myTrie.search("claim"));
-
-
-		MinHeap myHeap = new MinHeap(2);
-
-		myTrie.insert("plant");
-		myTrie.insert("plane");
-		myTrie.insert("plans");
-		myTrie.insert("planet");
-		myTrie.insert("plank");
-		myTrie.insert("planning");
-		myTrie.insert("pan");
-		myTrie.insert("lan");
-		myTrie.insert("planet");
-		myTrie.insert("planer");
-		myTrie.insert("aplans");
-		myTrie.insert("plains");
-		myTrie.insert("play");
-		myTrie.insert("clan");
-		myTrie.insert("plum");
-		myTrie.insert("span");
-		
-		
-		myTrie.findKWords("plan", myHeap);
 	}
 
 }
