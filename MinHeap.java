@@ -30,12 +30,9 @@ public class MinHeap {
 		this.capacity = capacity;
 	}
 
-	public void heapPush(String newWord, int newImportance) {
-		if (this.contains(newWord)) return;
-
-	}
-
 	public void insert(String newWord, int newImp) {
+		if (this.contains(newWord)) return;						// Word already exists in heap no need to re-insert
+		
 		if (occupied < capacity) {								// Heap is not full, insert unconditionally
 			words[occupied] = newWord;
 			importance[occupied] = newImp;
@@ -97,7 +94,6 @@ public class MinHeap {
 		importance[j] = tempImportance;
 	}
 	
-
 	public boolean contains(String targetWord) {
 		for (int i = 0; i < this.occupied; i++)
 			if (this.words[i].equals(targetWord))
@@ -107,8 +103,29 @@ public class MinHeap {
 	}
 
 	
+
 	//Driver function to test MinHeaP
 	public static void main(String[] args) {
+		
+		MinHeap myHeap = new MinHeap(10);
+
+		myHeap.insert("a", 1);
+		myHeap.insert("b", 2);
+		myHeap.insert("c", 3);
+		myHeap.insert("d", 4);
+		myHeap.insert("e", 5);
+		myHeap.insert("f", 6);
+		myHeap.insert("g", 10);
+		myHeap.insert("h", 8);
+		myHeap.insert("i", 9);
+		myHeap.insert("j", 7);
+		myHeap.insert("k", 0);
+		myHeap.insert("kjkj", 50);
+
+		System.out.println("");
+
+
+
 
 	}
 
