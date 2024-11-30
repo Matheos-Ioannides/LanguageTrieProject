@@ -17,10 +17,10 @@ public class HashTrie {
 			return;
 		}
 		if (newWord.length() == 1) {
-			currentNode.setWordLength(wordLength);
+			currentNode = currentNode.insert(newWord.charAt(0), wordLength);
+		} else {
+			currentNode = currentNode.insert(newWord.charAt(0), -1);
 		}
-
-		currentNode = currentNode.insert(newWord.charAt(0));
 
 		this.insert(newWord.substring(1), wordLength, currentNode);
 	}
@@ -36,7 +36,7 @@ public class HashTrie {
 			return false; // if the currentNode is null, that means the key was not found
 
 		if (targetWord.length() == 1)
-			if (currentNode.getWordLength() == wordLength && currentNode.search(targetWord.charAt(0)) != null) {
+			if (currentNode.getWordLength(targetWord.charAt(0)) == wordLength && currentNode.search(targetWord.charAt(0)) != null) {
 				return true;
 			} else {
 				return false;
@@ -44,6 +44,10 @@ public class HashTrie {
 
 		currentNode = currentNode.search(targetWord.charAt(0));
 		return this.search(targetWord.substring(1), wordLength, currentNode);
+	}
+
+	public boolean search(String targetWord) {
+		return this.search(targetWord, targetWord.length(), this.root);
 	}
 
 	public static void readDictionary(HashTrie myTrie, String filename) {
@@ -61,33 +65,30 @@ public class HashTrie {
 		}
 	}
 
-	public boolean search(String targetWord) {
-		return this.search(targetWord, targetWord.length(), this.root);
-	}
+//	public void findKWithPrefix(String prefix, int k, MinHeap myHeap) {
+//		HashTrieNode current = this.root.startsWith(prefix);
+//		if (current == null)
+//			return;
+//
+//		current.collectWithPrefix(current, prefix, k, myHeap);
+//
+//	}
+//
+//	public void findKWithSameLength(String targetWord, int k, MinHeap myHeap) {
+//
+//		if (this.root == null)
+//			return;
+//
+//		this.root.collectWithSameLength(this.root, "", targetWord, k, myHeap);
+//	}
 
-	private void findKWithPrefix(HashTrieNode node, String prefix, int k, MinHeap myHeap) {
-		HashTrieNode current = node.startsWith(prefix);
-		if (current == null)
-			return;
-
-		current.collectWithPrefix(current, prefix, k, myHeap);
-
-	}
-
-	// helper
-	public void findKWithPrefix(String prefix, int k, MinHeap myHeap) {
-		this.findKWithPrefix(this.root, prefix, k, myHeap);
-	}
-
-	// D:\Folders\UNI STUFF\WinterSemester24-25\EPL231\Project\LanguageTrie\src\LanguageTrieProject\Words.txt
+	// /home/students/cs/2023/mioann12/Desktop/AplaDameJeKanei/EPL231/Project/LanguageTrieProject/src/LanguageTrieProject/Words.txt
 	public static void main(String[] args) {
 
 		HashTrie myTrie = new HashTrie();
 
-		System.out.println("File name of dictionary");
-		Scanner in = new Scanner(System.in);
-		String dictionary = in.nextLine();
-		readDictionary(myTrie, dictionary);
+		readDictionary(myTrie,
+				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\Words.txt");
 
 		System.out.println(myTrie.search("abandon"));
 		System.out.println(myTrie.search("ability"));
@@ -157,9 +158,11 @@ public class HashTrie {
 		System.out.println(myTrie.search("circle"));
 		System.out.println(myTrie.search("citizen"));
 		System.out.println(myTrie.search("claim"));
+		
 
-		MinHeap myHeap = new MinHeap(0);
-		myTrie.findKWithPrefix("bo", 2, myHeap);
+		
+//		MinHeap myHeap = new MinHeap(0);
+//		myTrie.findKWithSameLength("jhin", 4, myHeap);
 	}
 
 }
