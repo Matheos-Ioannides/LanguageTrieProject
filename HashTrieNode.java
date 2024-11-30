@@ -90,9 +90,9 @@ public class HashTrieNode {
 			HashTrieNode next = current.search(i);
 			if (next != null) {
 				this.collectWithPrefix(next, prefix + i, myHeap);
-//				if (current.wordLength != -1 && current.importance != 0) {
-				if (current.getWordLength(i) != -1) {
-//				myHeap.heapPush(prefix, current.importance); not yet implemented
+				if (current.getWordLength(i) != -1 && current.getImportance(i) != 0) {
+//				if (current.getWordLength(i) != -1) {
+					myHeap.insert(prefix + i, current.getImportance(i));
 					System.out.println(prefix + i);
 				}
 			}
@@ -105,12 +105,15 @@ public class HashTrieNode {
 			return;
 
 		for (int i = 0; i < current.hashTable.table.length; i++) {
-//			if (current.hashTable.table[i] != null&&current.hashTable.table[i].getWordLength() == targetWord.length() && current.getImportance()!=0) {
-			if (current.hashTable.table[i] != null
-					&& current.hashTable.table[i].getWordLength() == targetWord.length()) {
-				if (countDifferentLetters(targetWord, wordBuilder + current.hashTable.table[i].getKey()) <= 2)
-//					myHeap.heapPush(wordBuilder, current.importance);
+			if (current.hashTable.table[i] != null && current.hashTable.table[i].getWordLength() == targetWord.length()
+					&& current.hashTable.table[i].getImportance() != 0) {
+//			if (current.hashTable.table[i] != null
+//					&& current.hashTable.table[i].getWordLength() == targetWord.length()) {
+				if (countDifferentLetters(targetWord, wordBuilder + current.hashTable.table[i].getKey()) <= 2) {
+					myHeap.insert(wordBuilder + current.hashTable.table[i].getKey(),
+							current.hashTable.table[i].getImportance());
 					System.out.println(wordBuilder + current.hashTable.table[i].getKey());
+				}
 			}
 		}
 
@@ -135,10 +138,13 @@ public class HashTrieNode {
 			return;
 
 		for (int i = 0; i < current.hashTable.table.length; i++) {
-			if (current.hashTable.table[i] != null && current.hashTable.table[i].getWordLength() > 0) {
-				if (validForSimilarLength(targetWord, wordBuilder + current.hashTable.table[i].getKey()))
-//				myHeap.heapPush(wordBuilder, current.importance);
+			if (current.hashTable.table[i] != null && current.hashTable.table[i].getWordLength() > 0
+					&& current.hashTable.table[i].getImportance() != 0) {
+				if (validForSimilarLength(targetWord, wordBuilder + current.hashTable.table[i].getKey())) {
+					myHeap.insert(wordBuilder + current.hashTable.table[i].getKey(),
+							current.hashTable.table[i].getImportance());
 					System.out.println(wordBuilder + current.hashTable.table[i].getKey());
+				}
 			}
 
 		}

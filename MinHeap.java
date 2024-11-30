@@ -102,7 +102,11 @@ public class MinHeap {
 		return false;
 	}
 
-	
+	public void printHeap() {
+		for(int i=0; i<this.occupied; i++) {
+			System.out.println(this.words[i]);
+		}
+	}
 
 	//Driver function to test MinHeaP
 	public static void main(String[] args) {

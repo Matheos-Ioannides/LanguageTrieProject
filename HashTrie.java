@@ -145,33 +145,22 @@ public class HashTrie {
 		this.findKWithSameLength(prefix, myHeap);
 		System.out.println("\nWith similar length to " + prefix);
 		this.findKWithSimilarLength(prefix, myHeap);
+		System.out.println("\n\n\n");
+		myHeap.printHeap();
 	}
 
 	public static void main(String[] args) {
 		HashTrie myTrie = new HashTrie();
 		readDictionary(myTrie,
-				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\Words.txt");
+				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\LargeDictionary.txt");
 		setImportance(myTrie,
-				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\ImpText.txt");
+				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\FunStory.txt");
 
-		System.out.println(myTrie.search("avoid"));  
-		System.out.println(myTrie.search("balance"));  
-		System.out.println(myTrie.search("beauty"));  
-		System.out.println(myTrie.search("believe"));  
-		System.out.println(myTrie.search("benefit"));  
-		System.out.println(myTrie.search("beyond"));  
-		System.out.println(myTrie.search("blend"));  
-		System.out.println(myTrie.search("border"));  
-		System.out.println(myTrie.search("borrow"));  
-		System.out.println(myTrie.search("break"));  
-		System.out.println(myTrie.search("bridge"));  
-		System.out.println(myTrie.search("bright")); 
+		MinHeap myHeap = new MinHeap(5);
+		myTrie.findKWords("time", myHeap);
+		System.out.println(myTrie.search("timeless"));
 		
-		
-		MinHeap myHeap = new MinHeap(123);
-		System.out.println("\n\n");
-		myTrie.findKWords("ar", myHeap);
-
+		System.out.println();
 	}
 
 }
