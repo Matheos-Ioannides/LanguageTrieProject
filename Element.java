@@ -5,6 +5,7 @@ public class Element {
 	private char key;
 	private int probeLength = 0;
 	private HashTrieNode next = null;
+	private int wordLength=-1;
 
 	public Element(char key) {
 		this.key = key;
@@ -30,6 +31,14 @@ public class Element {
 		this.next = next;
 	}
 
+	public int getWordLength() {
+		return this.wordLength;
+	}
+	
+	public void setWordLength(int wordLength) {
+		this.wordLength = wordLength;
+	}
+	
 	public static void main(String[] args) {
 
 	}
