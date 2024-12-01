@@ -2,6 +2,7 @@ package LanguageTrieProject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class HashTrie {
@@ -139,13 +140,13 @@ public class HashTrie {
 	}
 
 	public void findKWords(String prefix, MinHeap myHeap) {
-		System.out.println("With the prefix " + prefix);
+//		System.out.println("Same prefix:");
 		this.findKWithPrefix(prefix, myHeap);
-		System.out.println("\nWith the same length as " + prefix);
+//		System.out.println("\nSame l;ength: ");
 		this.findKWithSameLength(prefix, myHeap);
-		System.out.println("\nWith similar length to " + prefix);
+//		System.out.println("\nsimilar length: ");
 		this.findKWithSimilarLength(prefix, myHeap);
-		System.out.println("\n\n\n");
+
 		myHeap.printHeap();
 	}
 
@@ -168,12 +169,66 @@ public class HashTrie {
 	}
 
 	public static void main(String[] args) {
-		HashTrie myTrie = new HashTrie();
+		HashTrie myHashTrie = new HashTrie();
 
-		readDictionary(myTrie,
-				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\Static Dictionaries\\staticDictionary100000.txt");
+		System.out.print("Reading dictionary from arguments");
+//		readDictionary(myHashTrie, args[0]);
+		readDictionary(myHashTrie,
+				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\LargeDictionary.txt");
+//		try {
+//			Thread.sleep(500);
+//			System.out.print(".");
+//			Thread.sleep(500);
+//			System.out.print(".");
+//			Thread.sleep(500);
+//			System.out.print(".");
+//		} catch (Exception e) {
+//
+//		}
+		System.out.print("Done!\nReading text from arguments");
+//		setImportance(myHashTrie, args[1]);
+		setImportance(myHashTrie,
+				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\FunStory.txt");
+//		try {
+//			Thread.sleep(500);
+//			System.out.print(".");
+//			Thread.sleep(500);
+//			System.out.print(".");
+//			Thread.sleep(500);
+//			System.out.print(".");
+//		} catch (Exception e) {
+//
+//		}
+		System.out.println("Done!\n");
+		String input = "";
+		Scanner scan = new Scanner(System.in);
+		System.out.println("             HashTrie");
+		do {
 
-		System.out.println(memCalc(myTrie.root));
+			System.out.println("\nEnter your prefix and k, or ~~ to exit");
+//			System.out.print("-----------------------------------\n|");
+
+			input = scan.next();
+
+			if (input.equals("~~"))
+				break;
+
+			try {
+				int k = scan.nextInt();
+				MinHeap myHeap = new MinHeap(k);
+				myHashTrie.findKWords(input, myHeap);
+
+			} catch (InputMismatchException e) {
+				System.out.println("k should be an integer!");
+				break;
+			}
+
+		} while (!input.equals("~~"));
+
+		System.out.println("-----------------------------------");
+
+		System.out.println("EXITED");
+
 	}
 
 }

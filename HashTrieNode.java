@@ -93,7 +93,7 @@ public class HashTrieNode {
 				if (current.getWordLength(i) != -1 && current.getImportance(i) != 0) {
 //				if (current.getWordLength(i) != -1) {
 					myHeap.insert(prefix + i, current.getImportance(i));
-					System.out.println(prefix + i);
+//					System.out.println(prefix + i);
 				}
 			}
 		}
@@ -112,7 +112,7 @@ public class HashTrieNode {
 				if (countDifferentLetters(targetWord, wordBuilder + current.hashTable.table[i].getKey()) <= 2) {
 					myHeap.insert(wordBuilder + current.hashTable.table[i].getKey(),
 							current.hashTable.table[i].getImportance());
-					System.out.println(wordBuilder + current.hashTable.table[i].getKey());
+//					System.out.println(wordBuilder + current.hashTable.table[i].getKey());
 				}
 			}
 		}
@@ -143,7 +143,7 @@ public class HashTrieNode {
 				if (validForSimilarLength(targetWord, wordBuilder + current.hashTable.table[i].getKey())) {
 					myHeap.insert(wordBuilder + current.hashTable.table[i].getKey(),
 							current.hashTable.table[i].getImportance());
-					System.out.println(wordBuilder + current.hashTable.table[i].getKey());
+//					System.out.println(wordBuilder + current.hashTable.table[i].getKey());
 				}
 			}
 
@@ -161,13 +161,14 @@ public class HashTrieNode {
 		if (baseWord.length() - checkWord.length() == 1) {
 
 			int currentIndex = 0;
+			
 			for (int i = 0; i < baseWord.length(); i++) {
 				if (checkWord.charAt(currentIndex) == baseWord.charAt(i)) {
 					currentIndex++;
 				}
+				if (currentIndex == checkWord.length()-1)
+					return true;
 			}
-			if (currentIndex == checkWord.length())
-				return true;
 
 		} else if (checkWord.length() - baseWord.length() <= 2) {
 			int currentIndex = 0;
@@ -176,7 +177,7 @@ public class HashTrieNode {
 				if (checkWord.charAt(i) == baseWord.charAt(currentIndex)) {
 					currentIndex++;
 				}
-				if (currentIndex == baseWord.length())
+				if (currentIndex == baseWord.length()-1)
 					return true;
 			}
 
