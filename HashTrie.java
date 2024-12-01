@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class HashTrie {
 
-	private HashTrieNode root = new HashTrieNode();
+	public HashTrieNode root = new HashTrieNode();
 
 	public HashTrie() {
 	}
@@ -149,18 +149,31 @@ public class HashTrie {
 		myHeap.printHeap();
 	}
 
+	public static int memCalc(HashTrieNode current) {
+		if (current == null || current.hashTable == null)
+			return 0;
+
+		int memory = 12; // integers of our RobinHoodHash object
+		memory += current.hashTable.table.length * 13; // variables in each Element object (1 character & 2 integers
+														// since we ignore importance)
+
+		memory += current.hashTable.table.length * 4; // Size of the reference to the next HashTrieNode (next)
+
+		for (int i = 0; i < current.hashTable.table.length; i++) {
+			if (current.hashTable.table[i] != null)
+				memory += memCalc(current.hashTable.table[i].getNext());
+		}
+
+		return memory;
+	}
+
 	public static void main(String[] args) {
 		HashTrie myTrie = new HashTrie();
-		readDictionary(myTrie,
-				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\LargeDictionary.txt");
-		setImportance(myTrie,
-				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\FunStory.txt");
 
-		MinHeap myHeap = new MinHeap(5);
-		myTrie.findKWords("time", myHeap);
-		System.out.println(myTrie.search("timeless"));
-		
-		System.out.println();
+		readDictionary(myTrie,
+				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\Static Dictionaries\\staticDictionary100000.txt");
+
+		System.out.println(memCalc(myTrie.root));
 	}
 
 }
