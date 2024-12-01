@@ -16,7 +16,6 @@ public class Trie {
 
 		private TrieNode[] alphabet;
 		private int wordLength;
-		
 
 		public TrieNode() {
 			this.alphabet = new TrieNode[26];
@@ -89,8 +88,8 @@ public class Trie {
 
 		int memory = 0;
 
-		memory = 26 * 8; // we assume that each pointer takes up 4 bytes of memory
-		memory += 4; // and an additional 4 bytes for WordLength (integer)
+		memory = 4 + 4 + 26; // Fields of the node (2 integers and 26 characters)
+		memory += 26 * 4; // as well as the array of pointers to the next nodes
 
 		for (int i = 0; i < current.alphabet.length; i++) {
 			memory += memCalc(current.alphabet[i]); // compute the same for each child
