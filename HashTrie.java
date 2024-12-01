@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class HashTrie {
 
-	private HashTrieNode root = new HashTrieNode();
+	public HashTrieNode root = new HashTrieNode();
 
 	public HashTrie() {
 	}
@@ -150,11 +150,11 @@ public class HashTrie {
 	}
 
 	public static int memCalc(HashTrieNode current) {
-		if (current == null)
+		if (current == null || current.hashTable == null)
 			return 0;
 
 		int memory = 12; // integers of our RobinHoodHash object
-		memory += current.hashTable.table.length * 9; // variables in each Element object (1 character & 2 integers
+		memory += current.hashTable.table.length * 13; // variables in each Element object (1 character & 2 integers
 														// since we ignore importance)
 
 		memory += current.hashTable.table.length * 4; // Size of the reference to the next HashTrieNode (next)
