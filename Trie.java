@@ -1,8 +1,13 @@
 package LanguageTrieProject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class Trie {
-	
+
 	TrieNode root;
-	
+
 	public Trie() {
 		this.root = new TrieNode();
 	}
@@ -18,13 +23,14 @@ public class Trie {
 		}
 
 	}
-	
+
 	public void insert(String newWord) {
-		TrieNode p= this.root;
+		TrieNode p = this.root;
 		this.insert(newWord, newWord.length(), p);
 	}
 
-	//BUG: WordLength has to be on the node of the last character, not the one after
+	// BUG: WordLength has to be on the node of the last character, not the one
+	// after
 	private void insert(String newWord, int newLength, TrieNode p) {
 
 		if (newWord == "") {
@@ -34,15 +40,15 @@ public class Trie {
 
 		if (p.alphabet[newWord.charAt(0) - 'a'] == null)
 			p.alphabet[newWord.charAt(0) - 'a'] = new TrieNode();
-		
+
 		p = p.alphabet[newWord.charAt(0) - 'a'];
-		
+
 		insert(newWord.substring(1), newLength, p);
 		return;
 	}
 
 	public boolean find(String myWord) {
-		TrieNode p= this.root;
+		TrieNode p = this.root;
 		return this.find(myWord, myWord.length(), p);
 	}
 
@@ -59,32 +65,45 @@ public class Trie {
 		p = p.alphabet[myWord.charAt(0) - 'a'];
 		return find(myWord.substring(1), myLength, p);
 	}
-	
+
+	public static void readDictionary(Trie myTrie, String filename) {
+		try {
+			File dictionary = new File(filename);
+			Scanner input = new Scanner(dictionary);
+
+			while (input.hasNextLine()) {
+				myTrie.insert(input.nextLine().toLowerCase());
+			}
+			input.close();
+
+		} catch (FileNotFoundException e) {
+			System.out.println("Dictionary file not found: ");
+		}
+	}
+
+	public static int memCalc(TrieNode current) {
+
+		if (current == null)
+			return 0;
+
+		int memory = 0;
+
+		memory = 26 * 4; // we assume that each pointer takes up 4 bytes of memory
+		memory += 4; // and an additional 4 bytes for WordLength (integer)
+
+		for (int i = 0; i < current.alphabet.length; i++) {
+			memory += memCalc(current.alphabet[i]); // compute the same for each child
+		}
+
+		return memory;
+	}
+
 	public static void main(String[] args) {
-		Trie myTree = new Trie();
-		
-		myTree.insert("app");
-		myTree.insert("cat");
-		myTree.insert("catnip");
-		myTree.insert("car");
-		myTree.insert("carnip");
-		myTree.insert("likeabigwordaswell");
-		myTree.insert("necoarc");
-		myTree.insert("burenyan");
+		Trie myTrie = new Trie();
 
-		
-		System.out.println("app included? " + myTree.find("app"));
-		System.out.println("cat included? " + myTree.find("cat"));
-		System.out.println("catnip included? " + myTree.find("catnip"));
-		System.out.println("car included? " + myTree.find("car"));
-		System.out.println("carnip included? " + myTree.find("carnip"));
-		System.out.println("likeabigwordaswell included? " + myTree.find("likeabigwordaswell"));
-		System.out.println("necoarc included? " + myTree.find("necoarc"));
-		System.out.println("burenyan included? " + myTree.find("burenyan"));
-		
-		System.out.println("\n\nburunyan included? " + myTree.find("burunyan"));
-	
-
+		readDictionary(myTrie,
+				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\Static Dictionaries\\staticDictionary100000.txt");
+		System.out.println(memCalc(myTrie.root));
 	}
 
 }
