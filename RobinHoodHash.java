@@ -95,7 +95,7 @@ public class RobinHoodHash {
 		return false;
 	}
 
-	// Rehashes the table, pretty self explanatory. Idiot
+	//Rehashes the array into a new larger one
 	public void rehash() {
 		int newCapacity = 0;
 

@@ -157,7 +157,7 @@ public class HashTrieNode {
 	}
 
 	private int countDifferentLetters(String baseWord, String checkWord) {
-		int count = 0; // initalize the counter of different letters
+		int count = 0; // initialize the counter of different letters
 		for (int i = 0; i < baseWord.length(); i++)
 
 			// Compare characters at the same position.

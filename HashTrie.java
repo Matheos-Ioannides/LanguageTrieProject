@@ -113,7 +113,7 @@ public class HashTrie {
 			while (input.hasNextLine()) {
 				String word = input.next().toLowerCase();
 
-				// If the word doesn't contain any invalid characters
+				// If the word doesn't contain any invalid characters.
 				// If it contains any special characters we ignore it
 				if (checkWordValidity(word)) {
 					// we find the final node of the new word we're looking for
