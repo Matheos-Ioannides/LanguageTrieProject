@@ -29,8 +29,6 @@ public class Trie {
 		this.insert(newWord, newWord.length(), p);
 	}
 
-	// BUG: WordLength has to be on the node of the last character, not the one
-	// after
 	private void insert(String newWord, int newLength, TrieNode p) {
 
 		if (newWord == "") {
