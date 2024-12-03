@@ -29,13 +29,13 @@ public class WordGenerator {
 
 	// Generate a given number of words with a static word length
 	private static void generateDictionary(int numOfWords) {
-		String filename = "staticDictionary100000.txt"; // hardcoded file name
+		String filename = "staticDictionary" + numOfWords + "_test1.txt"; // hardcoded file name
 
 		try {
 			FileWriter printer = new FileWriter(filename);
 
 			for (int i = 0; i < numOfWords; i++) {
-				printer.write(generateRandomString(5) + "\n"); // hardcodeded word length
+				printer.write(generateRandomString(17) + "\n"); // hardcodeded word length
 			}
 			printer.close();
 
@@ -69,9 +69,9 @@ public class WordGenerator {
 	// Generate a given number of words with word lengths following a lognormal
 	// distribution
 	private static void generateLognormalDictionary(int numOfWords) {
-		String filename = "distributionDictionary" + numOfWords + "_test5.txt"; // hardcoded file name
+		String filename = "distributionDictionary" + numOfWords + "_test1.txt"; // hardcoded file name
 
-		double mean = 2; // hardcoded mean and standard deviation
+		double mean = 1.5; // hardcoded mean and standard deviation
 		double stddeviation = 0.6;
 
 		try {
@@ -94,49 +94,42 @@ public class WordGenerator {
 	// with this class
 	public static void main(String[] args) {
 
-		Trie myTrie = new Trie();
-		HashTrie myHashTrie = new HashTrie();
+//		for(int i=5000; i<=100000; i+=5000) {
+//			generateDictionary(i);
+//		}
 
-		Trie.readDictionary(myTrie,
-				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\Static Dictionaries\\staticDictionary1000.txt");
-		HashTrie.readDictionary(myHashTrie,
-				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\Static Dictionaries\\staticDictionary1000.txt");
+//		System.out.println("Trie memory:");
+		for (int i = 5; i <= 100; i += 5) {
+			Trie myTrie = new Trie();
+			HashTrie myHashTrie = new HashTrie();
 
-		System.out.println("Trie memory: " + myTrie.memCalc(myTrie.root));
-		System.out.println("HashTrie memory: " + myHashTrie.memCalc(myHashTrie.root));
+			Trie.readDictionary(myTrie,
+					"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\Distribution Dictionaries\\Test5\\distributionDictionary"
+							+ i + "000_test1.txt");
+			HashTrie.readDictionary(myHashTrie,
+					"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\Distribution Dictionaries\\Test5\\distributionDictionary"
+							+ i + "000_test1.txt");
 
-		myTrie = new Trie();
-		myHashTrie = new HashTrie();
+			System.out.print(myTrie.memCalc(myTrie.root) + " ");
 
-		Trie.readDictionary(myTrie,
-				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\Static Dictionaries\\staticDictionary5000.txt");
-		HashTrie.readDictionary(myHashTrie,
-				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\Static Dictionaries\\staticDictionary5000.txt");
+		}
 
-		System.out.println("\n\nTrie memory: " + myTrie.memCalc(myTrie.root));
-		System.out.println("HashTrie memory: " + myHashTrie.memCalc(myHashTrie.root));
+//		System.out.println("\nHashTrie memory:");
+		System.out.println();
+		for (int i = 5; i <= 100; i += 5) {
+			Trie myTrie = new Trie();
+			HashTrie myHashTrie = new HashTrie();
 
-		myTrie = new Trie();
-		myHashTrie = new HashTrie();
+			Trie.readDictionary(myTrie,
+					"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\Distribution Dictionaries\\Test5\\distributionDictionary"
+							+ i + "000_test1.txt");
+			HashTrie.readDictionary(myHashTrie,
+					"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\Distribution Dictionaries\\Test5\\distributionDictionary"
+							+ i + "000_test1.txt");
 
-		Trie.readDictionary(myTrie,
-				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\Static Dictionaries\\staticDictionary10000.txt");
-		HashTrie.readDictionary(myHashTrie,
-				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\Static Dictionaries\\staticDictionary10000.txt");
+			System.out.print(myHashTrie.memCalc(myHashTrie.root) + " ");
 
-		System.out.println("\n\nTrie memory: " + myTrie.memCalc(myTrie.root));
-		System.out.println("HashTrie memory: " + myHashTrie.memCalc(myHashTrie.root));
-
-		myTrie = new Trie();
-		myHashTrie = new HashTrie();
-
-		Trie.readDictionary(myTrie,
-				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\Static Dictionaries\\staticDictionary100000.txt");
-		HashTrie.readDictionary(myHashTrie,
-				"D:\\Folders\\UNI STUFF\\WinterSemester24-25\\EPL231\\Project\\LanguageTrie\\src\\LanguageTrieProject\\TextFiles\\Static Dictionaries\\staticDictionary100000.txt");
-
-		System.out.println("\n\nTrie memory: " + myTrie.memCalc(myTrie.root));
-		System.out.println("HashTrie memory: " + myHashTrie.memCalc(myHashTrie.root));
+		}
 	}
 
 }

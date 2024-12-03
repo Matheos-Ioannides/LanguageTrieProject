@@ -188,9 +188,9 @@ public class HashTrie {
 			return 0;
 
 		int memory = 12; // integers of our RobinHoodHash object
-		memory += current.hashTable.table.length * 13; // variables in each Element object (1 character & 3 integers)
-
-		memory += current.hashTable.table.length * 4; // Size of the reference to the next HashTrieNode (next)
+		memory += 8; // 2 integers of our node
+		memory += current.hashTable.table.length * (1 + 4 + 4); // variables in each Element object (1 character, 1
+																// integer and 1 pointer)
 
 		// for each child of the Trie, we initiate a self call
 		for (int i = 0; i < current.hashTable.table.length; i++) {
